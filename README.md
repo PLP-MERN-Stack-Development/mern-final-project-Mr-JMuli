@@ -1,7 +1,5 @@
 # SkyPharma ☁️ – Intelligent Online Pharmacy (MERN Capstone)
 
-**Live Demo**: [https://skypharma.vercel.app](https://skypharma.vercel.app)  
-**Backend**: [https://skypharma-backend.onrender.com](https://skypharma-backend.onrender.com)
 
 ## Features
 - Full user/auth system with JWT & roles
