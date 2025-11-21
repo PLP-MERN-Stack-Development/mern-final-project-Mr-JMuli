@@ -1,39 +1,31 @@
-import { Link, useNavigate } from 'react-router-dom'
-import { useQueryClient } from '@tanstack/react-query'
+import { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
-export default function Navbar() {
-  const user = JSON.parse(localStorage.getItem('user') || 'null')
+export default function Login() {
+  const [form, setForm] = useState({ email: '', password: '' })
   const navigate = useNavigate()
-  const queryClient = useQueryClient()
 
-  const logout = () => {
-    localStorage.removeItem('user')
-    document.cookie = 'jwt=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;'
-    queryClient.clear()
-    navigate('/login')
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', form)
+      localStorage.setItem('user', JSON.stringify(res.data))
+      navigate('/')
+    } catch (err) {
+      alert('Login failed')
+    }
   }
 
   return (
-    <nav className="bg-blue-600 text-white p-4 shadow-lg">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">SkyPharma ☁️</Link>
-        <div className="space-x-6">
-          <Link to="/medicines">Medicines</Link>
-          {user ? (
-            <>
-              <Link to="/my-orders">My Orders</Link>
-              {user.role === 'pharmacist' && <Link to="/pharmacist">Dashboard</Link>}
-              <span>Hello, {user.name}!</span>
-              <button onClick={logout} className="bg-red-500 px-4 py-2 rounded">Logout</button>
-            </>
-          ) : (
-            <>
-              <Link to="/login">Login</Link>
-              <Link to="/register">Register</Link>
-            </>
-          )}
-        </div>
-      </div>
-    </nav>
+    <div className="max-w-md mx-auto mt-20 p-8 bg-white rounded shadow">
+      <h2 className="text-3xl font-bold mb-6">Login</h2>
+      <form onSubmit={handleSubmit}>
+        <input className="w-full p-3 border mb-4 rounded" placeholder="Email" value={form.email} onChange={e => setForm({...form, email: e.target.value})} />
+        <input type="password" className="w-full p-3 border mb-6 rounded" placeholder="Password" value={form.password} onChange={e => setForm({...form, password: e.target.value})} />
+        <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded font-bold">Login</button>
+      </form>
+      <p className="mt-4 text-center">Pharmacist? Login with email: pharm@test.com / pass: 123456</p>
+    </div>
   )
 }
