@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 
+const API = import.meta.env.VITE_API_URL;
+
 export default function Medicines() {
   const { data: medicines = [], isLoading } = useQuery({
     queryKey: ['medicines'],
-    queryFn: () => axios.get('http://localhost:5000/api/medicines').then(res => res.data)
+    queryFn: () => axios.get(`${API}/medicines`).then(res => res.data)
   })
 
   if (isLoading) return <div className="text-center py-20 text-2xl">Loading medicines...</div>

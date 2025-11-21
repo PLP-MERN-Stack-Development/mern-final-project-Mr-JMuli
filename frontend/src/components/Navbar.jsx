@@ -16,7 +16,7 @@ export default function Navbar() {
   return (
     <nav className="bg-blue-600 text-white p-4 shadow-lg">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link to="/" className="text-2xl font-bold">SkyPharma ☁️</Link>
+        <Link to="/" className="text-2xl font-bold">SkyPharma </Link>
         <div className="space-x-6">
           <Link to="/medicines">Medicines</Link>
           {user ? (

@@ -4,18 +4,19 @@ import { useEffect } from 'react'
 import io from 'socket.io-client'
 
 let socket
+const API = import.meta.env.VITE_API_URL // e.g., https://skypharma-backend.onrender.com/api
 
 export default function MyOrders() {
   const user = JSON.parse(localStorage.getItem('user') || 'null')
   
   const { data: orders = [], refetch } = useQuery({
     queryKey: ['myorders'],
-    queryFn: () => axios.get('http://localhost:5000/api/orders/my', { withCredentials: true }).then(res => res.data)
+    queryFn: () => axios.get(`${API}/orders/my`, { withCredentials: true }).then(res => res.data)
   })
 
   useEffect(() => {
     if (!user) return
-    socket = io('http://localhost:5000')
+    socket = io(API.replace('/api','')) // Socket.io connects to base URL, not /api
     socket.emit('join', `user_${user._id}`)
 
     socket.on('orderUpdate', () => {

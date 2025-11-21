@@ -5,7 +5,7 @@ export default function Home() {
 
   return (
     <div className="text-center py-20 bg-gradient-to-b from-blue-50 to-white">
-      <h1 className="text-6xl font-bold text-blue-600 mb-6">SkyPharma ☁️</h1>
+      <h1 className="text-6xl font-bold text-blue-600 mb-6">SkyPharma </h1>
       <p className="text-2xl text-gray-700 mb-10">Your Trusted Online Pharmacy with Home Delivery</p>
       
       {user ? (
